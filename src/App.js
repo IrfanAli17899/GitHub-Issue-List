@@ -12,7 +12,10 @@ class App extends Component {
           isOpen: true,
           fav: false,
           favNum: 6,
-          react: 30
+          react: 30,
+          reacted: true,
+          mood:"laugh",
+          reaction:"https://media1.tenor.com/images/3eb5118cbe8ea3dbba845d680cbcf9b2/tenor.gif?itemid=8279022"
         }, {
           username: "Imran Ali",
           issue: "How To Listen An App On Node.js",
@@ -25,23 +28,42 @@ class App extends Component {
           issue: "This Is Undefined In React Functional-Compnent",
           isOpen: true,
           fav: false,
-          favNum:6,
-          react:20
+          favNum: 6,
+          react: 20
         }, {
           username: "Adeen-Ul-Haq",
           issue: "TypsCript Compiling Error",
           isOpen: true,
           fav: false,
-          favNum:9,
-          react:12
+          favNum: 9,
+          react: 12
         }, {
           username: "Zeeshan Ali",
           issue: "Cross-Origin Is Not Allowed In Firebase",
           isOpen: true,
           fav: false,
-          favNum:6,
-          react:7
+          favNum: 6,
+          react: 7
         },
+      ],
+      reactions: [
+        {
+          mood: "sad",
+          icon: "https://mir-s3-cdn-cf.behance.net/project_modules/disp/3eee1d34559659.56d59de621daa.gif"
+        },
+        {
+          mood: "wow",
+          icon: "https://mir-s3-cdn-cf.behance.net/project_modules/disp/6105c734559659.56d59c54f0d05.gif"
+        },
+        {
+          mood: "angry",
+          icon: "https://mir-s3-cdn-cf.behance.net/project_modules/disp/e66e6e34559659.56d57de095aee.gif"
+        },
+        {
+          mood: "laugh",
+          icon: "https://media1.tenor.com/images/3eb5118cbe8ea3dbba845d680cbcf9b2/tenor.gif?itemid=8279022"
+        }
+
       ]
     }
   }
@@ -49,18 +71,27 @@ class App extends Component {
   fav(index) {
     const { issues } = this.state;
     issues[index].fav = !issues[index].fav;
-    if(issues[index].fav){
+    if (issues[index].fav) {
       issues[index].favNum += 1;
-    }else{
-      issues[index].favNum -= 1;      
+    } else {
+      issues[index].favNum -= 1;
     }
     this.setState({
       issues
     })
   }
-
+  react(index,icon,mood){
+    const {issues}=this.state;
+    issues[index].react = issues[index].reacted? issues[index].react : issues[index].react + 1
+    issues[index].reacted = true;
+    issues[index].reaction = icon;
+    issues[index].mood = mood;
+    this.setState({
+      issues
+    })
+  }
   render() {
-    const { issues } = this.state
+    const { issues, reactions } = this.state;
     return (
       <div>
         <div className="header">
@@ -80,13 +111,32 @@ class App extends Component {
                 <p className="issue">{issue.issue}</p>
                 <hr />
                 <div className="con con1">
-                  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Facebook_Like_button.svg/2000px-Facebook_Like_button.svg.png" alt="Reaction" className="emoji" />         
-                     <span className="value">({issue.react})</span>
+                  <img src={issue.reacted ? issue.reaction:"https://mir-s3-cdn-cf.behance.net/project_modules/disp/e4299734559659.56d57de04bda4.gif"} alt="Reaction" className="emoji" />
+                  <span className="value">({issue.react})</span>
                 </div>
                 <div className="con con2" onClick={() => this.fav(index)}>
                   <img src={src} alt="favourite" className="fav" />
                   <span className="value">({issue.favNum})</span>
                 </div>
+                <ul className="emolist">
+                  {
+                    reactions.map((reaction,index2) => {
+                      return (
+                        <li className="emo" onClick={()=>this.react(index,reaction.icon,reaction.mood)}>
+                          <img src={reaction.icon}
+                            alt="Reaction" title={reaction.mood} />
+                        </li>
+                      )
+                    })
+                    //   <li className="emo">
+                    //   <img src={reaction.icon}
+                    //     alt="Reaction" title={reaction.mood} />
+                    // </li>
+
+
+                  }
+
+                </ul>
               </div>
             );
 
