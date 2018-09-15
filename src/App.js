@@ -12,10 +12,11 @@ class App extends Component {
           isOpen: true,
           fav: false,
           favNum: 6,
+          solved:true,
           react: 30,
           reacted: true,
-          mood:"laugh",
-          reaction:"https://media1.tenor.com/images/3eb5118cbe8ea3dbba845d680cbcf9b2/tenor.gif?itemid=8279022"
+          mood: "laugh",
+          reaction: "https://media1.tenor.com/images/3eb5118cbe8ea3dbba845d680cbcf9b2/tenor.gif?itemid=8279022"
         }, {
           username: "Imran Ali",
           issue: "How To Listen An App On Node.js",
@@ -32,6 +33,7 @@ class App extends Component {
           react: 20
         }, {
           username: "Adeen-Ul-Haq",
+          solved:true,
           issue: "TypsCript Compiling Error",
           isOpen: true,
           fav: false,
@@ -80,9 +82,9 @@ class App extends Component {
       issues
     })
   }
-  react(index,icon,mood){
-    const {issues}=this.state;
-    issues[index].react = issues[index].reacted? issues[index].react : issues[index].react + 1
+  react(index, icon, mood) {
+    const { issues } = this.state;
+    issues[index].react = issues[index].reacted ? issues[index].react : issues[index].react + 1
     issues[index].reacted = true;
     issues[index].reaction = icon;
     issues[index].mood = mood;
@@ -103,7 +105,8 @@ class App extends Component {
         {
           issues.map((issue, index) => {
             var src = issue.fav ? "https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678087-heart-512.png" : "https://banner2.kisspng.com/20180425/zpe/kisspng-coloring-book-emoji-heart-drawing-the-heart-icon-5ae04c65b33188.229609541524649061734.jpg"
-
+            var condition = issue.solved ? "Solved":"Not Solved";
+            var img = issue.solved ? "http://pngimage.net/wp-content/uploads/2018/06/tick-png-icon-7.png":"https://cdn2.iconfinder.com/data/icons/pointed-edge-web-navigation/101/cross-red-512.png"
             return (
               <div className="issueItem" key={index}>
                 <h1 className="username">{issue.username}</h1>
@@ -111,7 +114,7 @@ class App extends Component {
                 <p className="issue">{issue.issue}</p>
                 <hr />
                 <div className="con con1">
-                  <img src={issue.reacted ? issue.reaction:"https://mir-s3-cdn-cf.behance.net/project_modules/disp/e4299734559659.56d57de04bda4.gif"} alt="Reaction" className="emoji" />
+                  <img src={issue.reacted ? issue.reaction : "https://mir-s3-cdn-cf.behance.net/project_modules/disp/e4299734559659.56d57de04bda4.gif"} alt="Reaction" className="emoji" />
                   <span className="value">({issue.react})</span>
                 </div>
                 <div className="con con2" onClick={() => this.fav(index)}>
@@ -120,9 +123,9 @@ class App extends Component {
                 </div>
                 <ul className="emolist">
                   {
-                    reactions.map((reaction,index2) => {
+                    reactions.map((reaction, index2) => {
                       return (
-                        <li className="emo" onClick={()=>this.react(index,reaction.icon,reaction.mood)}>
+                        <li className="emo" onClick={() => this.react(index, reaction.icon, reaction.mood)}>
                           <img src={reaction.icon}
                             alt="Reaction" title={reaction.mood} />
                         </li>
@@ -137,6 +140,11 @@ class App extends Component {
                   }
 
                 </ul>
+                <span className="left">
+                  <img src={img} alt="" className="condition" />
+                  <span>{condition}</span>
+                  <span className="date"> {new Date().toDateString()}</span>
+                </span>
               </div>
             );
 

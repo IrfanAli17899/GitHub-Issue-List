@@ -43,6 +43,7 @@ opacity: 0.5;
 }
 .fav{
 width: 25px;
+margin-top: 1px;
 }
 .emoji{
 width: 25px;
@@ -110,4 +111,20 @@ left: 4px;
 }
 .emolist:hover{
   display: block;
+}
+.date{
+  padding-right:100px;
+  margin-left: 15px;
+  font-size: 14px;
+  color: rgb(43, 43, 43);    
+}
+.left{
+  margin-top: 10px;
+  float: right;
+}
+.condition{
+  width: 20px;
+  position: relative;
+  top: 4px;
+  margin-right:10px; 
 }
